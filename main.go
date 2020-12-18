@@ -118,7 +118,9 @@ func writeFileFromChannel(name string, readBytes chan readBytesData) {
 	for bytesData := range readBytes {
 		for _, data := range bytesData.readBytes {
 			completeData = append(completeData, data)
-			fmt.Printf("\nwriteFileFromChannel() : totalFileSizeBytes => %v , bytesReadSoFar : %v", bytesData.totalFileSize, len(completeData))
+			percent := float64(len(completeData)) / float64(bytesData.totalFileSize) * 100.0
+			percentComplete := fmt.Sprintf("%.3f", percent)
+			fmt.Printf("\nwriteFileFromChannel() : totalFileSizeBytes => %v , bytesReadSoFar : %v , percentComplete : %v", bytesData.totalFileSize, len(completeData), percentComplete)
 		}
 	}
 	fmt.Printf("\nwriteFileFromChannel() : done collecting all bytes...")
